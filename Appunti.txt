@@ -1,0 +1,26 @@
+Jimmy Cleveland
+Argomenti Full webpack project (wp 5)
+1. Babel transpiling for modern javascript
+2. React con JSX
+3. Build production e development
+4. Source maps
+5. Hot module reloading
+6. Css e esibizione di CSS da un import JS verso un file vero e proprio
+7. SASS
+8. Post-CSS con le nuove funzionalità di auto-creazione-di-prefissi su CSS
+9. Lista di configurazione di browser per personalizzare il supporto cross-browser
+10. Generazione in output di immagini come file separati o incorporati in JS bundle per caricamento più rapido di SVG/icone/immagini piccole
+11. Generazione dell'output HTML a partire da un semplice modello personalizzato
+12. Pulizia automatica della cartella di output
+13. Deploy e hosting rapido del progetto su Netlify con build di produzione automatiche ad ogni push sul ramo maestro
+14. React fast refresh (nuovo strumetno di ricaricamento a caldo) manutenuto dal team React
+
+Il video copre il tipo di progetti più diffuso, che secondo JC sono le SAP project
+Non copre l'instradamento.
+
+
+css-loader + mini-css-extract-plugin [crea risorse o un CSS finale unico]
+in alternativa
+style-loader [inietta gli stili nel bundle javascript]
+
+Quale scegliere? Se hai esigenze di caricare in fretta gli stili "in alto", usa style-loader per gli stili in alto e mini-css per gli stili "under the fold"
