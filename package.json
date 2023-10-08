@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "start": "webpack serve",
+    "start": "webpack serve --node-env development --env SERVE --static ./dist",
     "watch": "webpack --watch",
     "build": "webpack"
   },
