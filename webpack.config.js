@@ -1,3 +1,6 @@
-module.export = {
-  mode: "development"
-}
+module.exports = {
+  mode: "development",
+  devServer: {
+    static: './dist'
+  },
+};
