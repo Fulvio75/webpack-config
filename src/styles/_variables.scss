@@ -1,0 +1,8 @@
+// Variabile CSS, modalità recente e consigliata
+:root {
+  --text: #222;
+}
+
+// Variabile SASS, modalità residuale.
+// Meglio non mescolare le due modalità.
+$bg: peachpuff;
