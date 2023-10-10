@@ -26,7 +26,9 @@ module.exports = {
         ],
       },
       {
-        test: /\.js$/,
+        // Utilizziamo babel-loader per caricare i file js (per la transpilazione di retrocompatibilità)
+        // e jsx (per la transpilazione React)
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
@@ -38,6 +40,11 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin()
   ],
+
+  // Estensioni che vengono inferite quando si importa da un modulo senza fornire l'estensione
+  resolve: {
+    extensions: [".js", ".jsx"]
+  },
 
   devtool: "source-map",
   devServer: {
