@@ -1,4 +1,18 @@
+// Ci serve per output.path, che a sua volta ci serve per CleanWebpackPlugin,
+// che a sua volta, se fosse aggiornato, non richiederebbe output.path :(
+// Il modulo "path" viene distribuito con NodeJS, quindi non è necessario installarlo,
+// è sufficiente richiederne l'uso.
+const path = require("path");
+
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+// Per generare un file HTML da un modello e distribuirlo senza aver timore di doverlo 
+// preservare dalla cancellazione
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+// Per ripulire la cartella di distribuzione automaticamente a ogni build
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+
 
 let mode = "development";
 let target = "web";
@@ -13,6 +27,17 @@ module.exports = {
   target: target,
   // Per mantenere l'output più organizzato e depositare i contenuti della build in apposite cartelle
   output: {
+    // Questa proprietà ci serve solo per far funzionare correttamente CleanWebpackPlugin 
+    // (purtroppo il plugin non è aggiornato) oppure se si vuole usare un percorso di distribuzione
+    // differente dal default, che è "dist". Noi siamo nel primo caso.
+    // J.C. fa notare che, mentre altrove nel file di configurazione si possono serenamente usare
+    // percorsi relativi [es.: "./src/index.html"], qui bisogna usare questa bizzarra sintassi
+    // poiché è necessario che venga prodotto un percorso assoluto
+    // path: "./dist",  <-- Questo non funziona: "configuration.output.path: The provided value "./dist" is not an absolute path!"
+    // Se dalla console invochi "node" e poi al prompt di node "path.resolve()", vedrai il percorso in cui ti trovi.
+    // __dirname individua la directory in cui si trova il file in cui si trova questo comando.
+    path: path.resolve(__dirname, "dist"),
+
     // Gli elementi tra parentesi quadre non sono pienamente compresi nemmeno da J.C., in particolare Query
     assetModuleFilename: "images/[hash][ext][query]"
   },
@@ -74,7 +99,24 @@ module.exports = {
   },
 
   plugins: [
-    new MiniCssExtractPlugin()
+    // Mettiamo il plugin di pulizia in cima [J.C. l'ha sempre visto lì]
+    new CleanWebpackPlugin(),
+
+    new MiniCssExtractPlugin(),
+    
+    // Comportamento di default: viene creata nella cartella destinazione un 
+    // file index.html con alcune dipendenze
+    // new HtmlWebpackPlugin()
+
+    // Qui abbiamo esplicitamente detto qual è il modello da cui partire. Siccome
+    // il plugin seguente + webpack si curano di iniettare le dipendenze, dobbiamo
+    // rimuoverle per non averle presenti "duplicate" nel file index.html che viene generato
+    // nella cartella di destinazione "dist".
+    new HtmlWebpackPlugin({
+      template: "./src/index.html"
+    })
+
+
   ],
 
   // Estensioni che vengono inferite quando si importa da un modulo senza fornire l'estensione
