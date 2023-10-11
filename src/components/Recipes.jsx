@@ -1,3 +1,6 @@
+// @refresh reset
+// Qui sopra un pragma, per aggiungere funzionalità a questo singolo file
+// In questo caso chiediamo che le modifiche a questo file spazzino via lo stato di questo componente
 import { useState } from "react";
 
 const elvenShieldRecipe = {
