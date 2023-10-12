@@ -44,7 +44,8 @@ const plugins = [
 if (process.env.NODE_ENV === "production") {
   mode = "production";
   target = "browserslist";
-} else {
+} 
+if (process.env.SERVE) {
   // Plugin per il caricamento a caldo di React, senza che venga perso lo stato React
   plugins.push(new ReactRefreshWebpackPlugin());
 };
